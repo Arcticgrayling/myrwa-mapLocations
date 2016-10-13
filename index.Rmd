@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ##Map of Some Sampling Locations
-This map shows several sampling locations used to test water quality in the Mystic River Watershed.  Clicking on the locations will popup information on the Waterbody and location ID of the site clicked.
+This map shows several sampling locations used to test water quality in the Mystic River Watershed.  Clicking on the locations will popup information on the water body and location ID of the site clicked.
 
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE  }
@@ -72,9 +72,9 @@ my_map
 ```
 #### Refferences
 1. Data file is from Jeff Walkers report:  
-http://rpubs.com/walkerjeffd/myrwa-epa-grade-2014  
+HTTP://rpubs.com/walkerjeffd/myrwa-epa-grade-2014  
 https://github.com/walkerjeffd/myrwa-epa-grade
 
 ####Disclaimer: 
-This map is intended for eductional purposes only.   See the refferenced report or contact the Mystic River watershed association through there web site for further information or questions.  
+This map is intended for educational purposes only.   See the referenced report or contact the Mystic River watershed association through there web site for further information or questions.  
 [mysticriver.org](http://mysticriver.org)
