@@ -9,21 +9,27 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## test
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+##October, 2016
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r}
+library(leaflet)
+library(dplyr)
+setwd("~/Documents/gitrepos/MysticRiverLocations/")
 
-```{r cars}
-summary(cars)
+db_locations <- read.csv("db_locations.csv", stringsAsFactors=FALSE)
+
+db_locations <- db_locations %>% mutate(siteLabel = paste(WaterBodyID,  ID, 
+                                                          sep="<br>Site ID: "))
+
+my_map <- 
+  #leaflet(data = db_locations) %>%
+  db_locations %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers (lng = ~Longitude, lat= ~Latitude, 
+              popup = ~siteLabel,
+              clusterOptions = markerClusterOptions())
+ # addMarkers(lat=42.418419, lng=-71.116981,
+#             popup="Meetinghouse Brook, siteID MEB001")
+my_map
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
