@@ -1,5 +1,5 @@
 ---
-title: "Sampling Locations"
+title: "Select Sampling Locations - Mystic River"
 author: "Peter Olsen"
 date: "October 13, 2016"
 output: html_document
@@ -9,12 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##October, 2016
+##Map of Some Sampling Locations
+This map shows several sampling locations used to test water quality in the Mystic River Watershed.  Clicking on the locations will popup information on the Waterbody and location ID of the site clicked.
 
-```{r}
+
+```{r message = FALSE, warning = FALSE, echo = FALSE  }
 library(leaflet)
 library(dplyr)
 setwd("~/Documents/gitrepos/MysticRiverLocations/")
+
+if (!file.exists("db_locations.csv")) {
+download.file("https://s3.amazonaws.com/myrwa/epa-grade-2014/db_locations.csv", 
+                              destfile="db_locations.csv", method="curl")
+}
 
 db_locations <- read.csv("db_locations.csv", stringsAsFactors=FALSE)
 
@@ -31,5 +38,43 @@ my_map <-
               clusterOptions = markerClusterOptions())
  # addMarkers(lat=42.418419, lng=-71.116981,
 #             popup="Meetinghouse Brook, siteID MEB001")
-my_map
+my_map  
+```  
+  
+###Appendix  
+####Code:  
+```{r eval = FALSE}
+library(leaflet)
+library(dplyr)
+setwd("~/Documents/gitrepos/MysticRiverLocations/")
+
+if (!file.exists("db_locations.csv")) {
+download.file("https://s3.amazonaws.com/myrwa/epa-grade-2014/db_locations.csv", 
+                              destfile="db_locations.csv", method="curl")
+}
+
+db_locations <- read.csv("db_locations.csv", stringsAsFactors=FALSE)
+
+db_locations <- db_locations %>% mutate(siteLabel = paste(WaterBodyID,  ID, 
+                                                          sep="<br>Site ID: "))
+
+my_map <- 
+  #leaflet(data = db_locations) %>%
+  db_locations %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers (lng = ~Longitude, lat= ~Latitude, 
+              popup = ~siteLabel,
+              clusterOptions = markerClusterOptions())
+ # addMarkers(lat=42.418419, lng=-71.116981,
+#             popup="Meetinghouse Brook, siteID MEB001")
+my_map  
 ```
+#### Refferences
+1. Data file is from Jeff Walkers report:  
+http://rpubs.com/walkerjeffd/myrwa-epa-grade-2014  
+https://github.com/walkerjeffd/myrwa-epa-grade
+
+####Disclaimer: 
+This map is intended for eductional purposes only.   See the refferenced report or contact the Mystic River watershed association through there web site for further information or questions.  
+[mysticriver.org](http://mysticriver.org)
